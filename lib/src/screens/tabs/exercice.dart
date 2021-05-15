@@ -32,20 +32,23 @@ class MyScreen extends StatelessWidget {
   MiScale _mi = MiScale.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  List<int> _bpmList;
+  static List<double> _bpmList = [];
   Future<Null> bpm = FirebaseFirestore.instance
       .collection('BatimentosCardiacos')
       .where('uid', isEqualTo: auth.currentUser.uid)
       .get()
       .then((querySnapshot) {
+    //clear list
+    _bpmList.clear();
     querySnapshot.docs.forEach((result) {
-      print(result.data());
+      // print(result.data());
+
       int aux = result.data().values.skip(1).first;
       print(aux);
 
-      _bpmList.add(result.data().values.skip(1).first);
-      //    print("LIST:");
-      //   print(_bpmList);
+      if (aux >= 20) _bpmList.add(aux.toDouble());
+      print("LIST:");
+      print(_bpmList);
     });
   });
 
@@ -95,16 +98,34 @@ productRef.forEach((field) {
     Feature(
       title: "Grafico de batimentos cardiacos",
       color: Colors.red,
-      data: [],
+      data: _bpmList,
     ),
-
-    /* 
-
     Feature(
       title: "Exercise",
       color: Colors.pink,
-      data: [1, 0.8, 0.6, 0.7, 0.3],
-    ),
+      data: [
+        1,
+        0.8,
+        0.6,
+        0.7,
+        0.3,
+        0.8,
+        0.6,
+        0.7,
+        0.3,
+        0.8,
+        0.6,
+        0.7,
+        0.3,
+        0.8,
+        0.6,
+        0.7,
+        0.3,
+        100,
+        200,
+        300
+      ],
+    ), /*
     Feature(
       title: "Study",
       color: Colors.cyan,
@@ -114,15 +135,14 @@ productRef.forEach((field) {
       title: "Water Plants",
       color: Colors.green,
       data: [0.6, 0.2, 0, 0.1, 1],
-    ),*/
+    ),
+    
     Feature(
       title: "BPM",
       color: Colors.red,
       data: [],
-    ),
+    ),*/
   ];
-
-  const MyScreen({Key key, this._bpmList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +152,7 @@ productRef.forEach((field) {
       children: <Widget>[
         Container(),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 64.0),
+          padding: const EdgeInsets.symmetric(vertical: 80.0), //64.0
           child: Text(
             "Grafos estatisticos",
             style: TextStyle(
@@ -145,10 +165,72 @@ productRef.forEach((field) {
         LineGraph(
           features: features,
           size: Size(320, 400),
-          labelX: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
-          labelY: ['20%', '40%', '60%', '80%', '100%'],
+          labelX: [
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5'
+          ],
+          labelY: [
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5',
+            'Day 1',
+            'Day 2',
+            'Day 3',
+            'Day 4',
+            'Day 5'
+          ],
           showDescription: true,
-          graphColor: Colors.white30,
+          graphColor: Colors.black,
           graphOpacity: 0.2,
           verticalFeatureDirection: true,
           descriptionHeight: 130,

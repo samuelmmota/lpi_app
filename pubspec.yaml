@@ -51,6 +51,7 @@ dependencies:
   xiaomi_scale: ^2.0.0
   flutter_blue: ^0.8.0
   draw_graph: ^1.0.0
+  charts_flutter: ^0.10.0
 
 
 
