@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "835476360259",
+    "project_id": "lpi-healthapp",
+    "storage_bucket": "lpi-healthapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835476360259:android:58536f1170ad2e858cd8f6",
+        "android_client_info": {
+          "package_name": "edu.ufp.inf.lpi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "835476360259-gbgls0js6gope6suaod1odsgf2requbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Z2mA5DEnhvY4Rwh2oIIfY74kY71Xwg4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "835476360259-gbgls0js6gope6suaod1odsgf2requbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
