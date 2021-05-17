@@ -11,9 +11,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  String _email, _password,_passwordRepeat;
-  final auth = FirebaseAuth.instance;
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
 
+  String _email, _password, _passwordRepeat;
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -92,20 +97,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                    color: Color(vermelho_escuro),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: FlatButton(
                     onPressed: () {
-
-                      if(_password.compareTo(_passwordRepeat)==0){
+                      if (_password.compareTo(_passwordRepeat) == 0) {
                         auth.createUserWithEmailAndPassword(
                             email: _email, password: _password);
-                        auth.signInWithEmailAndPassword(email: _email, password: _password);//necessario para gravar o email
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => UserData()));
+                        auth.signInWithEmailAndPassword(
+                            email: _email,
+                            password:
+                                _password); //necessario para gravar o email
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => UserData()));
                       }
-
 
                       /*Navigator.push(
                           context, MaterialPageRoute(builder: (_) => HomeScreen()));*/
@@ -123,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             FlatButton(
               child: Text('Já tens conta? Efectua o Log In',
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Color(purpura),
                   )),
               onPressed: () {
                 Navigator.of(context).pushReplacement(

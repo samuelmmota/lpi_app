@@ -12,6 +12,12 @@ class _AddTabState extends State<AddTab> {
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
+
   @override
   Widget build(BuildContext context) {
     String _bpm;
@@ -29,14 +35,14 @@ class _AddTabState extends State<AddTab> {
               icon: Icon(Icons.favorite),
               labelText: 'Batimentos Cardiacos <3',
               labelStyle: TextStyle(
-                color: Colors.lightBlue.shade600,
+                color: Color(0xFFC72C41),
               ),
               helperText: 'ex: 120',
               suffixIcon: Icon(
                 Icons.check_circle,
               ),
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.lightBlue.shade600),
+                borderSide: BorderSide(color: Color(0xFFC72C41)),
               ),
             ),
             validator: (value) {
@@ -52,6 +58,7 @@ class _AddTabState extends State<AddTab> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Color(0xFF510A32)),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   // If the form is valid, display a snackbar. In the real world,

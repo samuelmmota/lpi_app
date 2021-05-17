@@ -51,11 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
 */
 
   @override
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Health App'),
-        backgroundColor: Colors.lightBlue.shade600,
+        backgroundColor: Color(0xFF801336),
       ),
       drawer: CustomDrawer(),
       /*   Navigator bar*/
@@ -66,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
         bucket: bucket,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        splashColor: Colors.white,
+        backgroundColor: const Color(0xFFC72C41),
+        splashColor: Color(0xFFEE4540),
         child: Icon(Icons.add),
         onPressed: () async {
           // createAlertDialog(context);
@@ -99,16 +105,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.fitness_center_outlined,
-                          color:
-                              _currentTab == 0 ? Colors.blue : Colors.blueGrey,
-                        ),
+                        Icon(Icons.fitness_center_outlined,
+                            color: _currentTab == 0
+                                ? Color(0xFFC72C41)
+                                : Color(0xFF2D142C)),
                         Text("Exercicio",
                             style: TextStyle(
                                 color: _currentTab == 0
-                                    ? Colors.blue
-                                    : Colors.blueGrey))
+                                    ? Color(0xFFC72C41)
+                                    : Color(0xFF2D142C)))
                       ],
                     ),
                   ),
@@ -125,14 +130,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           Icons.stacked_bar_chart,
-                          color:
-                              _currentTab == 1 ? Colors.blue : Colors.blueGrey,
+                          color: _currentTab == 1
+                              ? Color(0xFFC72C41)
+                              : Color(0xFF2D142C),
                         ),
                         Text("Dashboard",
                             style: TextStyle(
                                 color: _currentTab == 1
-                                    ? Colors.blue
-                                    : Colors.blueGrey))
+                                    ? Color(0xFFC72C41)
+                                    : Color(0xFF2D142C)))
                       ],
                     ),
                   ),
@@ -244,14 +250,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           Icons.person,
-                          color:
-                              _currentTab == 2 ? Colors.blue : Colors.blueGrey,
+                          color: _currentTab == 2
+                              ? Color(0xFFC72C41)
+                              : Color(0xFF2D142C),
                         ),
-                        Text("TAB",
+                        Text("Add data",
                             style: TextStyle(
                                 color: _currentTab == 2
-                                    ? Colors.blue
-                                    : Colors.blueGrey))
+                                    ? Color(0xFFC72C41)
+                                    : Color(0xFF2D142C)))
                       ],
                     ),
                   ),
@@ -268,14 +275,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Icon(
                           Icons.settings,
-                          color:
-                              _currentTab == 3 ? Colors.blue : Colors.blueGrey,
+                          color: _currentTab == 3
+                              ? Color(0xFFC72C41)
+                              : Color(0xFF2D142C),
                         ),
-                        Text("Exercicio",
+                        Text("Bluetooth",
                             style: TextStyle(
                                 color: _currentTab == 3
-                                    ? Colors.blue
-                                    : Colors.blueGrey))
+                                    ? Color(0xFFC72C41)
+                                    : Color(0xFF2D142C)))
                       ],
                     ),
                   ),
@@ -303,8 +311,8 @@ class CustomDrawer extends StatelessWidget {
           DrawerHeader(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: <Color>[
-                Colors.lightBlue.shade800,
-                Colors.blue.shade50,
+                Color(0xFF510A32),
+                Color(0xFFEE4540),
               ])),
               child: Container(
                 child: Column(
@@ -323,7 +331,8 @@ class CustomDrawer extends StatelessWidget {
                       padding: EdgeInsets.all(4.0),
                       child: Text(
                         'Health APP drawer',
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        style:
+                            TextStyle(color: Color(0xFFEE4540), fontSize: 20.0),
                       ),
                     )
                   ],
@@ -376,10 +385,9 @@ class CustomListTitle extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
       child: Container(
         decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(color: Colors.blueGrey.shade100))),
+            border: Border(bottom: BorderSide(color: Color(0xFFEE4540)))),
         child: InkWell(
-          splashColor: Colors.lightBlue.shade400,
+          splashColor: Color(0xFFC72C41),
           onTap: onTap,
           child: Container(
             height: 50,

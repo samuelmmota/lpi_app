@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -7,6 +8,11 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   FlutterBlue flutterBlue = FlutterBlue.instance;
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +28,13 @@ class _SettingsState extends State<Settings> {
 // Stop scanning
     flutterBlue.stopScan();
 
-
-
-
     return Scaffold(
         appBar: AppBar(
-            title: Text('Settings App: Bluethoot'),
-          backgroundColor: Colors.lightBlue.shade600,
+          title: Text('Settings App: Bluethoot'),
+          backgroundColor: Color(0xFFC72C41),
         ),
-        body:Center(
-          child:Text('Settings Screen: mudar aqui o conteudo') ,
-        )
-
-
-    );
+        body: Center(
+          child: Text('Settings Screen: mudar aqui o conteudo'),
+        ));
   }
 }

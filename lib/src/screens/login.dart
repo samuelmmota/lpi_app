@@ -12,6 +12,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String _email, _password;
   final auth = FirebaseAuth.instance;
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +81,14 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Text(
                 'Esqueci a minha Password',
-                style: TextStyle(color: Colors.blue, fontSize: 15),
+                style: TextStyle(color: Color(roxo), fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+                  color: Color(roxo), borderRadius: BorderRadius.circular(20)),
               child: ElevatedButton(
                 onPressed: () async {
                   await auth.signInWithEmailAndPassword(
@@ -111,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
             FlatButton(
               child: Text('Novo utilizador? Criar Conta',
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Color(roxo),
                   )),
               onPressed: () {
                 Navigator.of(context).pushReplacement(

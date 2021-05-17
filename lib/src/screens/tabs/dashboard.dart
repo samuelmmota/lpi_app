@@ -14,6 +14,12 @@ class _DashboardState extends State<Dashboard> {
   MiScale _mi = MiScale.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
+
   @override
   Widget build(BuildContext context) {
     // Create a CollectionReference called users that references the firestore collection
@@ -25,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Health App: DashBoard'),
-        backgroundColor: Colors.lightBlue.shade600,
+        backgroundColor: Color(0xFFC72C41),
       ),
       body: UserData(),
 
