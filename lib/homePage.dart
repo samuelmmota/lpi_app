@@ -17,7 +17,8 @@ class _HomePageState extends State<HomePage> {
           height: 80,
           width: 150,
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+              color: Color(0xFF801336),
+              borderRadius: BorderRadius.circular(10)),
           child: FlatButton(
             onPressed: () {
               Navigator.pop(context);

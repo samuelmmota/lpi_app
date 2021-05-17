@@ -25,6 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Color(vermelho_escuro),
         title: Text("Regista-te em Health App"),
       ),
       body: SingleChildScrollView(

@@ -26,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Color(vermelho_escuro),
         title: Text("Login em Healhapp"),
       ),
       body: SingleChildScrollView(
@@ -81,15 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Text(
                 'Esqueci a minha Password',
-                style: TextStyle(color: Color(roxo), fontSize: 15),
+                style: TextStyle(color: Color(purpura), fontSize: 15),
               ),
             ),
             Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
-                  color: Color(roxo), borderRadius: BorderRadius.circular(20)),
-              child: ElevatedButton(
+                  color: Color(vermelho_escuro),
+                  borderRadius: BorderRadius.circular(20)),
+              child: FlatButton(
                 onPressed: () async {
                   await auth.signInWithEmailAndPassword(
                       email: _email, password: _password);
@@ -116,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
             FlatButton(
               child: Text('Novo utilizador? Criar Conta',
                   style: TextStyle(
-                    color: Color(roxo),
+                    color: Color(purpura),
                   )),
               onPressed: () {
                 Navigator.of(context).pushReplacement(

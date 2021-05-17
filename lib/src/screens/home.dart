@@ -18,7 +18,9 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin<HomeScreen> {
+  bool get wantKeepAlive => true;
   final auth = FirebaseAuth.instance;
   int _currentTab = 0;
   final List<Widget> screens = [Dashboard(), Exercice(), AddTab(), Settings()];
