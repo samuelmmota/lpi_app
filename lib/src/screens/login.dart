@@ -3,21 +3,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lpi_app/src/screens/home.dart';
 import 'package:lpi_app/src/screens/register.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-
 class _LoginScreenState extends State<LoginScreen> {
   String _email, _password;
   final auth = FirebaseAuth.instance;
 
-
   @override
   Widget build(BuildContext context) {
-
-    if(auth.currentUser != null) Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> HomeScreen()));
+    if (auth.currentUser != null)
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -40,17 +40,17 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-             padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
                     hintText: 'Enter valid email id as abc@gmail.com'),
-                onChanged: (value) {setState(() {
-                  _email = value.trim();
-
-                });},
-
+                onChanged: (value) {
+                  setState(() {
+                    _email = value.trim();
+                  });
+                },
               ),
             ),
             Padding(
@@ -58,21 +58,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                     hintText: 'Insere a password'),
-                onChanged: (value) {setState(() {
-                  _password = value.trim();
-
-                });},
-
+                onChanged: (value) {
+                  setState(() {
+                    _password = value.trim();
+                  });
+                },
               ),
             ),
             FlatButton(
-              onPressed: (){
+              onPressed: () {
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
               },
               child: Text(
@@ -85,15 +84,18 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
-                onPressed: () {
-
-                  auth.signInWithEmailAndPassword(email: _email, password: _password);
-                  print('###Inicio de sessão com sucesso no User: '+auth.currentUser.email+'(cID:'+auth.currentUser.uid+')###');
-                  if(auth.currentUser!= null) {
+              child: ElevatedButton(
+                onPressed: () async {
+                  await auth.signInWithEmailAndPassword(
+                      email: _email, password: _password);
+                  print('###Inicio de sessão com sucesso no User: ' +
+                      auth.currentUser.email +
+                      '(cID:' +
+                      auth.currentUser.uid +
+                      ')###');
+                  if (auth.currentUser != null) {
                     Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) => HomeScreen()));
-
                   }
                   /*Navigator.push(
                       context, MaterialPageRoute(builder: (_) => HomeScreen()));*/
@@ -106,10 +108,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             //Text('Novo utilizador? Criar Conta'),
-            FlatButton(child: Text('Novo utilizador? Criar Conta', style: TextStyle(color: Colors.blue,)), onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => RegisterScreen()));
-            },),
+            FlatButton(
+              child: Text('Novo utilizador? Criar Conta',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  )),
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => RegisterScreen()));
+              },
+            ),
           ],
         ),
       ),

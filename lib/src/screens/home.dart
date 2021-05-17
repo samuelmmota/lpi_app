@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
   final List<Widget> screens = [Dashboard(), Exercice(), AddTab(), Settings()];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget _currentScreen = Dashboard(); //tab inicial!!!!
+  Widget _currentScreen = Exercice(); //tab inicial!!!!
 /*
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
@@ -332,21 +332,33 @@ class CustomDrawer extends StatelessWidget {
           CustomListTitle(Icons.person, 'Perfil de Utilizador', () {}),
           CustomListTitle(Icons.notifications, 'Notificações', () {}),
           CustomListTitle(Icons.settings, 'Definições', () {}),
-          CustomListTitle(Icons.logout, 'Log Out', () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-            auth.signOut();
-            //if (auth.currentUser == null) {
-            print('###Termino de sessão com sucesso no User: ' +
-                auth.currentUser.email +
-                '(cID:' +
-                auth.currentUser.uid +
-                ')###');
-            //   }
+          CustomListTitle(Icons.logout, 'Log Out', () async {
+            await signOut();
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                (route) => false);
+            //    if (auth.currentUser == null)
+            //  Navigator.of(context).pushReplacement(
+            //    MaterialPageRoute(builder: (context) => LoginScreen()));
           }),
         ],
       ),
     );
+  }
+
+  Future signOut() async {
+    print('###Termino de sessão com sucesso no User: ' +
+        auth.currentUser.email +
+        '(cID:' +
+        auth.currentUser.uid +
+        ')###');
+    try {
+      return await auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }
 
