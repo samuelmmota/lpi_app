@@ -27,7 +27,7 @@ class _AddTabState extends State<AddTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _bpmText(context),
+          _BpmText(context),
           _ImcText(context),
           _WheightText(context),
           _TensaoText(context)
@@ -35,83 +35,6 @@ class _AddTabState extends State<AddTab> {
       ),
     );
   }
-}
-
-Widget _bpmText(BuildContext context) {
-  String _bpm;
-  final _formKey = GlobalKey<FormState>();
-  // BPM
-  return Form(
-    key: _formKey,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        TextFormField(
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-          keyboardType: TextInputType.number,
-          cursorColor: Theme.of(context).cursorColor,
-          maxLength: 20,
-          decoration: InputDecoration(
-            icon: Icon(Icons.favorite),
-            labelText: 'Batimentos Cardiacos',
-            labelStyle: TextStyle(
-              color: Color(0xFFC72C41),
-            ),
-            helperText: 'ex: 120',
-            suffixIcon: Icon(
-              Icons.check_circle,
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFC72C41)),
-            ),
-          ),
-          validator: (value) {
-            if ((value == null || value.isEmpty) && int.parse(value) <= 0 ||
-                int.parse(value) >= 300) {
-              return 'Please enter some valid number';
-            } else {
-              _bpm = value;
-              return null;
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Color(0xFF510A32)),
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
-                // If the form is valid, display a snackbar. In the real world,
-                // you'd often call a server or save the information in a database.
-                print("-> user: " + auth.currentUser.uid);
-                print("-> _bpm: " + _bpm);
-                _bpm = _bpm.trim();
-
-                //  AddUser(auth.currentUser.uid,_nome,auth.currentUser.email,int.parse(_altura));
-                CollectionReference imcs = FirebaseFirestore.instance
-                    .collection('BatimentosCardiacos');
-
-                imcs.add({
-                  'uid': auth.currentUser.uid,
-                  'valor': int.parse(_bpm),
-                  "time": Timestamp.now(),
-                  // "time": FieldValue.serverTimestamp(),
-                  // "time": firebase.firestore.FieldValue.serverTimestamp(),,
-                }).then((value) => print(
-                    "## Dados do _bpm adiconados à base de dados firebase ##"));
-                // Validate returns true if the form is valid, or false otherwise.
-                if (!_formKey.currentState.validate()) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              }
-            },
-            child: Text('Submit'),
-          ),
-        ),
-      ],
-    ),
-  );
 }
 
 Widget _ImcText(BuildContext context) {
@@ -333,6 +256,83 @@ Widget _TensaoText(BuildContext context) {
                   // "time": firebase.firestore.FieldValue.serverTimestamp(),,
                 }).then((value) => print(
                     "## Dados do tensao adiconados à base de dados firebase ##"));
+                // Validate returns true if the form is valid, or false otherwise.
+                if (!_formKey.currentState.validate()) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Processing Data')));
+                }
+              }
+            },
+            child: Text('Submit'),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _BpmText(BuildContext context) {
+  String _bpm;
+  final _formKey = GlobalKey<FormState>();
+  // BPM
+  return Form(
+    key: _formKey,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        TextFormField(
+          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
+          cursorColor: Theme.of(context).cursorColor,
+          maxLength: 20,
+          decoration: InputDecoration(
+            icon: Icon(Icons.favorite),
+            labelText: 'Batimentos Cardiacos',
+            labelStyle: TextStyle(
+              color: Color(0xFFC72C41),
+            ),
+            helperText: 'ex: 120',
+            suffixIcon: Icon(
+              Icons.check_circle,
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFFC72C41)),
+            ),
+          ),
+          validator: (value) {
+            if ((value == null || value.isEmpty) && int.parse(value) <= 0 ||
+                int.parse(value) >= 300) {
+              return 'Please enter some valid number';
+            } else {
+              _bpm = value;
+              return null;
+            }
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Color(0xFF510A32)),
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                // If the form is valid, display a snackbar. In the real world,
+                // you'd often call a server or save the information in a database.
+                print("-> user: " + auth.currentUser.uid);
+                print("-> _bpm: " + _bpm);
+                _bpm = _bpm.trim();
+
+                //  AddUser(auth.currentUser.uid,_nome,auth.currentUser.email,int.parse(_altura));
+                CollectionReference imcs = FirebaseFirestore.instance
+                    .collection('BatimentosCardiacos');
+
+                imcs.add({
+                  'uid': auth.currentUser.uid,
+                  'valor': int.parse(_bpm),
+                  "time": Timestamp.now(),
+                  // "time": FieldValue.serverTimestamp(),
+                  // "time": firebase.firestore.FieldValue.serverTimestamp(),,
+                }).then((value) => print(
+                    "## Dados do _bpm adiconados à base de dados firebase ##"));
                 // Validate returns true if the form is valid, or false otherwise.
                 if (!_formKey.currentState.validate()) {
                   ScaffoldMessenger.of(context)
