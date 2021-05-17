@@ -345,10 +345,12 @@ class CustomDrawer extends StatelessWidget {
           CustomListTitle(Icons.settings, 'Definições', () {}),
           CustomListTitle(Icons.logout, 'Log Out', () async {
             await signOut();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => LoginScreen()),
-                (route) => false);
+            await Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+            // await Navigator.pushAndRemoveUntil(
+            //  context,
+            //  MaterialPageRoute(builder: (context) => LoginScreen()),
+            //  (route) => false);
             //    if (auth.currentUser == null)
             //  Navigator.of(context).pushReplacement(
             //    MaterialPageRoute(builder: (context) => LoginScreen()));

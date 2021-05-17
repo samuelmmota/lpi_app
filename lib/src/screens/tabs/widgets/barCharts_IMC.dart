@@ -4,14 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/barCharts_BPM.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/lineChat_BPM.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/barCharts_IMC.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/lineChat_IMC.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/barCharts_Weight.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/lineChat_Weight.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/barCharts_Tensao.dart';
-import 'package:lpi_app/src/screens/tabs/widgets/lineChat_Tensao.dart';
 import 'package:xiaomi_scale/xiaomi_scale.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:async';
@@ -22,385 +14,7 @@ import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
 
-class Exercice extends StatefulWidget {
-  @override
-  _ExerciceState createState() => _ExerciceState();
-}
-
-class _ExerciceState extends State<Exercice>
-    with AutomaticKeepAliveClientMixin<Exercice> {
-/**
- *   MiScale _mi = MiScale.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  static List<double> _bpmList = [];
-  Future<Null> bpm = FirebaseFirestore.instance
-      .collection('BatimentosCardiacos')
-      .where('uid', isEqualTo: auth.currentUser.uid)
-      .get()
-      .then((querySnapshot) {
-    //clear list
-    _bpmList.clear();
-    querySnapshot.docs.forEach((result) {
-      // print(result.data());
-
-      int aux = result.data().values.skip(1).first;
-      print(aux);
-
-      if (aux >= 20) _bpmList.add(aux.toDouble());
-      print("LIST:");
-      print(_bpmList);
-    });
-  });
- */
-  TabController _controller;
-  int _selectedIndex = 0;
-  bool get wantKeepAlive => true;
-  static const laranja = 0xFFEE4540;
-  static const vermelho_claro = 0xFFC72C41;
-  static const vermelho_escuro = 0xFF801336;
-  static const purpura = 0xFF510A32;
-  static const roxo = 0xFF2D142C;
-
-  @override
-  Widget build(BuildContext context) {
-    return // MaterialApp(
-        /*  appBar: AppBar(
-          title: Text('Health App: Exercice'),
-          backgroundColor: Colors.lightBlue.shade600,
-          
-        ),*/
-        /*body: SingleChildScrollView(
-            child: Column(
-          children: <Widget>[
-          //  MyHomePage(),
-          LineChartSample2(),
-          BarChartSample1(),
-          Container(),
-          ],
-        ))*/
-        DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFFC72C41),
-          flexibleSpace: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TabBar(
-                indicatorColor: Color(0xFF2D142C),
-                indicatorSize: TabBarIndicatorSize.tab,
-                isScrollable: true,
-                indicatorWeight: 5,
-                /*indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), // Creates border
-                    color: Colors.greenAccent),*/
-                tabs: [
-                  Tab(child: Text('BPM Graficos')),
-                  Tab(child: Text('IMC Graficos')),
-                  Tab(child: Text('Peso Graficos')),
-                  Tab(child: Text('Tensão Graficos')),
-                ],
-              )
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            _bpmTAB(),
-            _imcTAB(),
-            Icon(Icons.directions_car, size: 350),
-            Icon(Icons.directions_bike, size: 350),
-          ],
-        ),
-      ),
-    );
-  }
-}
-//=======================================================||================================================================================================
-
-Widget _bpmTAB() {
-  return SingleChildScrollView(
-      child: Column(
-    children: <Widget>[
-      Text(
-        "BPM grafico de valores diarios",
-        textAlign: TextAlign.right,
-      ),
-      LineChartBPM(),
-      BarChartBPM(),
-      Container(),
-    ],
-  ));
-}
-
-Widget _imcTAB() {
-  return SingleChildScrollView(
-      child: Column(
-    children: <Widget>[
-      Text(
-        "IMC grafico de valores diarios",
-        textAlign: TextAlign.right,
-      ),
-      LineChartIMC(),
-      BarChartIMC(),
-      Container(),
-    ],
-  ));
-}
-/*
-class LineChartSample2 extends StatefulWidget {
-  @override
-  _LineChartSample2State createState() => _LineChartSample2State();
-}
-
-class _LineChartSample2State extends State<LineChartSample2> {
-  List<Color> gradientColors = [
-    const Color(0xffff0011),
-    const Color(0xfffc2c2c),
-  ];
-
-  bool showAvg = false;
-
-  @override
-  static List<double> _bpmList = [];
-  Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(18),
-                ),
-                color: Color(0xff232d37)),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 18.0, left: 12.0, top: 24, bottom: 12),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 100,
-          height: 50,
-          child: TextButton(
-            onPressed: () {
-              setState(() {
-                showAvg = !showAvg;
-              });
-            },
-            child: Text(
-              'BPM (dia)',
-              style: TextStyle(
-                  fontSize: 12,
-                  color:
-                      showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  LineChartData mainData() {
-    return LineChartData(
-      gridData: FlGridData(
-        show: true,
-        drawVerticalLine: true,
-        getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 0,
-          getTextStyles: (value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return '';
-              case 5:
-                return '';
-              case 8:
-                return '';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '';
-              case 3:
-                return '';
-              case 5:
-                return '';
-            }
-            return '';
-          },
-          reservedSize: 0,
-          margin: 5,
-        ),
-      ),
-      borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 50,
-      minY: 0,
-      maxY: 400,
-      lineBarsData: [lineChartBarData()],
-    );
-  }
-
-  LineChartData avgData() {
-    return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
-      gridData: FlGridData(
-        show: true,
-        drawHorizontalLine: true,
-        getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return '';
-              case 5:
-                return '';
-              case 8:
-                return '';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '10k';
-              case 3:
-                return '30k';
-              case 5:
-                return '50k';
-            }
-            return '';
-          },
-          reservedSize: 100,
-          margin: 12,
-        ),
-      ),
-      borderData: FlBorderData(
-          show: true,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 300,
-      minY: 0,
-      maxY: 500,
-      lineBarsData: [lineChartBarData()],
-    );
-  }
-
-  LineChartBarData lineChartBarData() {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-    Future<Null> bpm = FirebaseFirestore.instance
-        .collection('BatimentosCardiacos')
-        .where('uid', isEqualTo: auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) {
-      //clear list
-      _bpmList.clear();
-      querySnapshot.docs.forEach((result) {
-        // print(result.data());
-
-        int aux = result.data().values.skip(1).first;
-        print(aux);
-
-        if (aux >= 20) _bpmList.add(aux.toDouble());
-        print("LIST:");
-        print(_bpmList);
-      });
-    });
-
-    List<FlSpot> spot = [];
-    for (var i = 0; i < _bpmList.length; i++) {
-      var x = i + 1;
-      spot.add(FlSpot(x.toDouble(), _bpmList[i]));
-    }
-    print(spot);
-    return LineChartBarData(
-      spots: spot,
-      isCurved: false,
-      colors: gradientColors,
-      barWidth: 5,
-      isStrokeCapRound: true,
-      dotData: FlDotData(
-        show: false,
-      ),
-      belowBarData: BarAreaData(
-        show: true,
-        colors: gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-      ),
-    );
-  }
-}
-
-//===========================||=======================================
-
-class BarChartSample1 extends StatefulWidget {
+class BarChartIMC extends StatefulWidget {
   final List<Color> availableColors = [
     Colors.purpleAccent,
     Colors.yellow,
@@ -409,18 +23,24 @@ class BarChartSample1 extends StatefulWidget {
     Colors.pink,
     Colors.redAccent,
   ];
-
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => BarChartIMCState();
 }
 
-class BarChartSample1State extends State<BarChartSample1> {
+class BarChartIMCState extends State<BarChartIMC>
+    with AutomaticKeepAliveClientMixin<BarChartIMC> {
   final Color barBackgroundColor = const Color(0xff37434d);
   final Duration animDuration = const Duration(milliseconds: 250);
-
+  bool get wantKeepAlive => true;
   int touchedIndex = -1;
 
   bool isPlaying = false;
+
+  static const laranja = 0xFFEE4540;
+  static const vermelho_claro = 0xFFC72C41;
+  static const vermelho_escuro = 0xFF801336;
+  static const purpura = 0xFF510A32;
+  static const roxo = 0xFF2D142C;
 
   static List<double> _bpmList = [];
   static List<double> seg = [],
@@ -448,9 +68,9 @@ class BarChartSample1State extends State<BarChartSample1> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
-                    'BPM',
+                    'IMC',
                     style: TextStyle(
-                        color: const Color(0xff0f4a3c),
+                        color: const Color(vermelho_escuro),
                         fontSize: 24,
                         fontWeight: FontWeight.bold),
                   ),
@@ -460,7 +80,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                   Text(
                     'Grafico estatistico média diária semanal',
                     style: TextStyle(
-                        color: const Color(0xff379982),
+                        color: const Color(0xFFC72C41),
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
@@ -489,7 +109,7 @@ class BarChartSample1State extends State<BarChartSample1> {
                 child: IconButton(
                   icon: Icon(
                     isPlaying ? Icons.pause : Icons.play_arrow,
-                    color: const Color(0xff0f4a3c),
+                    color: const Color(vermelho_escuro),
                   ),
                   onPressed: () {
                     setState(() {
@@ -512,7 +132,7 @@ class BarChartSample1State extends State<BarChartSample1> {
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.red,
+    Color barColor = const Color(0xffffbf00),
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -551,11 +171,11 @@ class BarChartSample1State extends State<BarChartSample1> {
         Timestamp timestamp = Timestamp.fromDate(firstDayOfWeek); //To TimeStamp
 
         Query bpm_uid = FirebaseFirestore.instance
-            .collection('BatimentosCardiacos')
+            .collection('IMC')
             .where('uid', isEqualTo: auth.currentUser.uid);
 
         Query bpm_time = FirebaseFirestore.instance
-            .collection('BatimentosCardiacos')
+            .collection('IMC')
             .where("time", isGreaterThanOrEqualTo: timestamp);
 
         Future<Null> _weekbpm = bpm_time.get().then((querySnapshot) {
@@ -817,5 +437,3 @@ class BarChartSample1State extends State<BarChartSample1> {
     }
   }
 }
-*/
-//===========================||=======================================
