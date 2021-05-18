@@ -14,22 +14,22 @@ import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
 
-class LineChartSample2 extends StatefulWidget {
+class LineChartWeight extends StatefulWidget {
   @override
-  _LineChartSample2State createState() => _LineChartSample2State();
+  _LineChartWeightState createState() => _LineChartWeightState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2>
-    with AutomaticKeepAliveClientMixin<LineChartSample2> {
+class _LineChartWeightState extends State<LineChartWeight>
+    with AutomaticKeepAliveClientMixin<LineChartWeight> {
   List<Color> gradientColors = [
-    const Color(0xffff0011),
-    const Color(0xfffc2c2c),
+    const Color(0xff26C60D),
+    const Color(0xff0DC632),
   ];
 
   bool showAvg = false;
   bool get wantKeepAlive => true;
   @override
-  static List<double> _bpmList = [];
+  static List<double> _weightList = [];
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
@@ -60,7 +60,7 @@ class _LineChartSample2State extends State<LineChartSample2>
               });
             },
             child: Text(
-              'BPM (dia)',
+              'Valores de peso mes (30 dia)',
               style: TextStyle(
                   fontSize: 12,
                   color:
@@ -222,29 +222,38 @@ class _LineChartSample2State extends State<LineChartSample2>
   LineChartBarData lineChartBarData() {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    Future<Null> bpm = FirebaseFirestore.instance
-        .collection('BatimentosCardiacos')
-        .where('uid', isEqualTo: auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) {
+/**Dados do ultimo mes */
+    var d = DateTime.now();
+    var firstDayOfMonth = DateTime(1, d.month, d.year);
+
+    Timestamp timestamp = Timestamp.fromDate(firstDayOfMonth); //To TimeStamp
+
+    Query bpm_uid = FirebaseFirestore.instance
+        .collection('wight')
+        .where('uid', isEqualTo: auth.currentUser.uid);
+
+    Query bpm_time = bpm_uid.where("time", isGreaterThanOrEqualTo: timestamp);
+
+    Future<Null> _monthWeight =
+        bpm_time.orderBy('time', descending: true).get().then((querySnapshot) {
       //clear list
-      _bpmList.clear();
+      _weightList.clear();
       querySnapshot.docs.forEach((result) {
         // print(result.data());
 
         int aux = result.data().values.skip(1).first;
         print(aux);
 
-        if (aux >= 20) _bpmList.add(aux.toDouble());
+        if (aux >= 20) _weightList.add(aux.toDouble());
         print("LIST:");
-        print(_bpmList);
+        print(_weightList);
       });
     });
 
     List<FlSpot> spot = [];
-    for (var i = 0; i < _bpmList.length; i++) {
+    for (var i = 0; i < _weightList.length; i++) {
       var x = i + 1;
-      spot.add(FlSpot(x.toDouble(), _bpmList[i]));
+      spot.add(FlSpot(x.toDouble(), _weightList[i]));
     }
     print(spot);
     return LineChartBarData(

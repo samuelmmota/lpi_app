@@ -170,12 +170,9 @@ class BarChartBPMState extends State<BarChartBPM>
 
         Timestamp timestamp = Timestamp.fromDate(firstDayOfWeek); //To TimeStamp
 
-        Query bpm_uid = FirebaseFirestore.instance
-            .collection('BatimentosCardiacos')
-            .where('uid', isEqualTo: auth.currentUser.uid);
-
         Query bpm_time = FirebaseFirestore.instance
             .collection('BatimentosCardiacos')
+            .where('uid', isEqualTo: auth.currentUser.uid)
             .where("time", isGreaterThanOrEqualTo: timestamp);
 
         Future<Null> _weekbpm = bpm_time.get().then((querySnapshot) {
@@ -203,9 +200,9 @@ class BarChartBPMState extends State<BarChartBPM>
             //if(timestamp.toDate().day==)
 
             /***Debug***/
-            print(aux);
-            print(timestamp.toDate().day);
-            print(timestamp.toDate().weekday);
+            //print(aux);
+            // print(timestamp.toDate().day);
+            // print(timestamp.toDate().weekday);
 
             //  if (aux >= 20) _bpmList.add(aux.toDouble());
             //   print("LIST POR DIA DA SEMANA:");

@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
 
-class BarChartSample1 extends StatefulWidget {
+class BarChartWeight extends StatefulWidget {
   final List<Color> availableColors = [
     Colors.purpleAccent,
     Colors.yellow,
@@ -24,11 +24,11 @@ class BarChartSample1 extends StatefulWidget {
     Colors.redAccent,
   ];
   @override
-  State<StatefulWidget> createState() => BarChartSample1State();
+  State<StatefulWidget> createState() => BarChartWeightState();
 }
 
-class BarChartSample1State extends State<BarChartSample1>
-    with AutomaticKeepAliveClientMixin<BarChartSample1> {
+class BarChartWeightState extends State<BarChartWeight>
+    with AutomaticKeepAliveClientMixin<BarChartWeight> {
   final Color barBackgroundColor = const Color(0xff37434d);
   final Duration animDuration = const Duration(milliseconds: 250);
   bool get wantKeepAlive => true;
@@ -68,7 +68,7 @@ class BarChartSample1State extends State<BarChartSample1>
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
-                    'BPM',
+                    'Peso',
                     style: TextStyle(
                         color: const Color(vermelho_escuro),
                         fontSize: 24,
@@ -171,11 +171,11 @@ class BarChartSample1State extends State<BarChartSample1>
         Timestamp timestamp = Timestamp.fromDate(firstDayOfWeek); //To TimeStamp
 
         Query bpm_uid = FirebaseFirestore.instance
-            .collection('BatimentosCardiacos')
+            .collection('weight')
             .where('uid', isEqualTo: auth.currentUser.uid);
 
         Query bpm_time = FirebaseFirestore.instance
-            .collection('BatimentosCardiacos')
+            .collection('weight')
             .where("time", isGreaterThanOrEqualTo: timestamp);
 
         Future<Null> _weekbpm = bpm_time.get().then((querySnapshot) {

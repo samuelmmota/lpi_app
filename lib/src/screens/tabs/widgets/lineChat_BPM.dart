@@ -222,11 +222,18 @@ class _LineChartBPMState extends State<LineChartBPM>
   LineChartBarData lineChartBarData() {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    Future<Null> bpm = FirebaseFirestore.instance
+//var d = DateTime.now();
+    //  var firstDayOfMonth = DateTime(1,d.month,d.year);
+
+    Query bpm_uid = FirebaseFirestore.instance
         .collection('BatimentosCardiacos')
-        .where('uid', isEqualTo: auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) {
+        .where('uid', isEqualTo: auth.currentUser.uid);
+
+    /* Query bpm_time = FirebaseFirestore.instance
+        .collection('weight')
+        .where("time", isGreaterThanOrEqualTo: timestamp);*/
+
+    Future<Null> bpm = bpm_uid.orderBy('time').get().then((querySnapshot) {
       //clear list
       _bpmList.clear();
       querySnapshot.docs.forEach((result) {
