@@ -6,12 +6,12 @@ import 'package:lpi_app/src/screens/login.dart';
 import 'package:lpi_app/src/screens/tabs/addtab.dart';
 import 'package:lpi_app/src/screens/tabs/dashboard.dart';
 import 'package:lpi_app/src/screens/tabs/exercice.dart';
-import 'package:lpi_app/src/screens/tabs/settings.dart';
+import 'package:lpi_app/src/screens/tabs/bluetooth.dart';
 import 'database/userdata.dart';
 import 'tabs/addtab.dart';
 import 'tabs/dashboard.dart';
 import 'tabs/exercice.dart';
-import 'tabs/settings.dart';
+import 'tabs/bluetooth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen>
   bool get wantKeepAlive => true;
   final auth = FirebaseAuth.instance;
   int _currentTab = 0;
-  final List<Widget> screens = [Dashboard(), Exercice(), AddTab(), Settings()];
+  final List<Widget> screens = [Dashboard(), Exercice(), AddTab(), Bluetooth()];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget _currentScreen = Exercice(); //tab inicial!!!!
 /*
@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen>
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        _currentScreen = Settings();
+                        _currentScreen = Bluetooth();
                         _currentTab = 3;
                       });
                     },
