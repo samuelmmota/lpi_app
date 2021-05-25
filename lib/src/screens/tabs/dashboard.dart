@@ -96,8 +96,8 @@ class BpmData extends StatelessWidget {
   Widget build(BuildContext context) {
     Query bpm = FirebaseFirestore.instance
         .collection('BatimentosCardiacos')
-        .where('uid', isEqualTo: auth.currentUser.uid);
-    //  .orderBy('time', descending: true);
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .orderBy('time', descending: true);
 
     return StreamBuilder<QuerySnapshot>(
       stream: bpm.snapshots(),
@@ -130,8 +130,8 @@ class ImcData extends StatelessWidget {
   Widget build(BuildContext context) {
     Query bpm = FirebaseFirestore.instance
         .collection('IMC')
-        .where('uid', isEqualTo: auth.currentUser.uid);
-    //  .orderBy('time', descending: true);
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .orderBy('time', descending: true);
 
     return StreamBuilder<QuerySnapshot>(
       stream: bpm.snapshots(),
@@ -164,8 +164,8 @@ class PesoData extends StatelessWidget {
   Widget build(BuildContext context) {
     Query bpm = FirebaseFirestore.instance
         .collection('weight')
-        .where('uid', isEqualTo: auth.currentUser.uid);
-    //  .orderBy('time', descending: true);
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .orderBy('time', descending: true);
 
     return StreamBuilder<QuerySnapshot>(
       stream: bpm.snapshots(),
@@ -198,8 +198,8 @@ class TensaoData extends StatelessWidget {
   Widget build(BuildContext context) {
     Query bpm = FirebaseFirestore.instance
         .collection('tensao')
-        .where('uid', isEqualTo: auth.currentUser.uid);
-    //  .orderBy('time', descending: true);
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .orderBy('time', descending: true);
 
     return StreamBuilder<QuerySnapshot>(
       stream: bpm.snapshots(),
