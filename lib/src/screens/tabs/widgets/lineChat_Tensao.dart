@@ -14,16 +14,16 @@ import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
 
-class LineChartSample2 extends StatefulWidget {
+class LineChartTensao extends StatefulWidget {
   @override
-  _LineChartSample2State createState() => _LineChartSample2State();
+  _LineChartTensaoState createState() => _LineChartTensaoState();
 }
 
-class _LineChartSample2State extends State<LineChartSample2>
-    with AutomaticKeepAliveClientMixin<LineChartSample2> {
+class _LineChartTensaoState extends State<LineChartTensao>
+    with AutomaticKeepAliveClientMixin<LineChartTensao> {
   List<Color> gradientColors = [
-    const Color(0xffff0011),
-    const Color(0xfffc2c2c),
+    const Color(0xff009be8),
+    const Color(0xff5fb4de),
   ];
 
   bool showAvg = false;
@@ -60,7 +60,7 @@ class _LineChartSample2State extends State<LineChartSample2>
               });
             },
             child: Text(
-              'BPM (dia)',
+              'Tensão (dia)',
               style: TextStyle(
                   fontSize: 12,
                   color:
@@ -222,22 +222,28 @@ class _LineChartSample2State extends State<LineChartSample2>
   LineChartBarData lineChartBarData() {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    Future<Null> bpm = FirebaseFirestore.instance
-        .collection('BatimentosCardiacos')
+    var d = DateTime.now();
+    var thisDay = DateTime(d.year, d.month, d.day);
+    Timestamp timestamp = Timestamp.fromDate(thisDay); //To TimeStamp
+
+    Query bpm_time = FirebaseFirestore.instance
+        .collection('tensao')
         .where('uid', isEqualTo: auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) {
+        .where("time", isGreaterThan: timestamp);
+
+    Future<Null> bpm = bpm_time.get().then((querySnapshot) {
       //clear list
       _bpmList.clear();
+      print("#####: uma iteração feita (TENSAO-LINE Chart");
       querySnapshot.docs.forEach((result) {
-        // print(result.data());
+        //  print(result.data());
 
         int aux = result.data().values.skip(1).first;
-        print(aux);
+        //  print(aux);
 
         if (aux >= 20) _bpmList.add(aux.toDouble());
-        print("LIST:");
-        print(_bpmList);
+        //  print("LIST:");
+        // print(_bpmList);
       });
     });
 

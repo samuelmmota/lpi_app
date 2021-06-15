@@ -183,6 +183,8 @@ class BarChartBPMState extends State<BarChartBPM>
           sex.clear();
           sab.clear();
           dom.clear();
+          print("#####: uma iteração feita (BPM-BAR Chart");
+
           querySnapshot.docs.forEach((result) {
             // print(result.data());
 

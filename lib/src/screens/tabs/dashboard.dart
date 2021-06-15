@@ -48,10 +48,10 @@ class _DashboardState extends State<Dashboard>
                     borderRadius: BorderRadius.circular(50), // Creates border
                     color: Colors.greenAccent),*/
                 tabs: [
-                  Tab(child: Text('BPM DATA')),
-                  Tab(child: Text('IMC DATA')),
-                  Tab(child: Text('Peso DATA')),
-                  Tab(child: Text('TENSAO DATA')),
+                  Tab(child: Text('BPM Data')),
+                  Tab(child: Text('IMC Data')),
+                  Tab(child: Text('Peso Data')),
+                  Tab(child: Text('TENSÃO Data')),
                 ],
               )
             ],
@@ -114,10 +114,35 @@ class BpmData extends StatelessWidget {
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             DateTime dateNow = document.data()['time'].toDate();
 
-            return new ListTile(
-              title: new Text("BPM[" + dateNow.toString() + "]:"),
-              subtitle: new Text(document.data()['valor'].toString()),
-            );
+            return new Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.favorite,
+                    color: Colors.pink,
+                    size: 24.0,
+                  ),
+                  title: new Text(
+                    "Batimento Cardiaco : " +
+                        document.data()['valor'].toString(),
+                    style: TextStyle(
+                        color: const Color(0xFF510A32),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: new Text(dateNow.day.toString() +
+                      "/" +
+                      dateNow.month.toString() +
+                      "/" +
+                      dateNow.year.toString() +
+                      "     " +
+                      dateNow.hour.toString() +
+                      ":" +
+                      dateNow.minute.toString() +
+                      " (" +
+                      dateNow.second.toString() +
+                      "s)"),
+                ));
           }).toList(),
         );
       },
@@ -148,10 +173,35 @@ class ImcData extends StatelessWidget {
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             DateTime dateNow = document.data()['time'].toDate();
 
-            return new ListTile(
-              title: new Text("IMC[" + dateNow.toString() + "]:"),
-              subtitle: new Text(document.data()['valor'].toString()),
-            );
+            return new Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.local_activity_outlined,
+                    color: Colors.yellow,
+                    size: 24.0,
+                  ),
+                  title: new Text(
+                    "Indice Massa Corporal : " +
+                        document.data()['valor'].toString(),
+                    style: TextStyle(
+                        color: const Color(0xFF510A32),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: new Text(dateNow.day.toString() +
+                      "/" +
+                      dateNow.month.toString() +
+                      "/" +
+                      dateNow.year.toString() +
+                      "     " +
+                      dateNow.hour.toString() +
+                      ":" +
+                      dateNow.minute.toString() +
+                      " (" +
+                      dateNow.second.toString() +
+                      "s)"),
+                ));
           }).toList(),
         );
       },
@@ -182,10 +232,34 @@ class PesoData extends StatelessWidget {
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             DateTime dateNow = document.data()['time'].toDate();
 
-            return new ListTile(
-              title: new Text("BPM[" + dateNow.toString() + "]:"),
-              subtitle: new Text(document.data()['valor'].toString()),
-            );
+            return new Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.local_parking_sharp,
+                    color: Colors.green,
+                    size: 24.0,
+                  ),
+                  title: new Text(
+                    "Peso : " + document.data()['valor'].toString(),
+                    style: TextStyle(
+                        color: const Color(0xFF510A32),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: new Text(dateNow.day.toString() +
+                      "/" +
+                      dateNow.month.toString() +
+                      "/" +
+                      dateNow.year.toString() +
+                      "     " +
+                      dateNow.hour.toString() +
+                      ":" +
+                      dateNow.minute.toString() +
+                      " (" +
+                      dateNow.second.toString() +
+                      "s)"),
+                ));
           }).toList(),
         );
       },
@@ -213,16 +287,106 @@ class TensaoData extends StatelessWidget {
         }
 
         return new ListView(
+          padding: const EdgeInsets.all(8),
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             DateTime dateNow = document.data()['time'].toDate();
+/*Text(
+        'Graficos Estatisticos - Batimentos Cardiacos',
+        style: TextStyle(
+            color: const Color(0xFFC72C41),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+      ),*/
 
-            return new ListTile(
-              title: new Text("BPM[" + dateNow.toString() + "]:"),
-              subtitle: new Text(document.data()['valor'].toString()),
-            );
+            return new Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.bloodtype,
+                    color: Colors.blue,
+                    size: 24.0,
+                  ),
+                  title: new Text(
+                    "Tensão : " + document.data()['valor'].toString(),
+                    style: TextStyle(
+                        color: const Color(0xFF510A32),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: new Text(dateNow.day.toString() +
+                      "/" +
+                      dateNow.month.toString() +
+                      "/" +
+                      dateNow.year.toString() +
+                      "     " +
+                      dateNow.hour.toString() +
+                      ":" +
+                      dateNow.minute.toString() +
+                      " (" +
+                      dateNow.second.toString() +
+                      "s)"),
+                ));
           }).toList(),
         );
       },
     );
   }
+}
+
+Widget slideRightBackground() {
+  return Container(
+    color: Colors.green,
+    child: Align(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(
+            width: 20,
+          ),
+          Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+          Text(
+            " Edit",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ],
+      ),
+      alignment: Alignment.centerLeft,
+    ),
+  );
+}
+
+Widget slideLeftBackground() {
+  return Container(
+    color: Colors.red,
+    child: Align(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+          Text(
+            " Delete",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.right,
+          ),
+          SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
+      alignment: Alignment.centerRight,
+    ),
+  );
 }

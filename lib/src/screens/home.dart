@@ -22,10 +22,10 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin<HomeScreen> {
   bool get wantKeepAlive => true;
   final auth = FirebaseAuth.instance;
-  int _currentTab = 0;
+  int _currentTab = 2;
   final List<Widget> screens = [Dashboard(), Exercice(), AddTab(), Bluetooth()];
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget _currentScreen = Exercice(); //tab inicial!!!!
+  Widget _currentScreen = AddTab(); //tab inicial!!!!
 /*
   Future<String> createAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen>
         child: _currentScreen,
         bucket: bucket,
       ),
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFFC72C41),
         splashColor: Color(0xFFEE4540),
         child: Icon(Icons.add),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen>
           //Scaffold.of(context).showSnackBar(mySnackbar);
           // });
         },
-      ),
+      ),*/
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
         notchMargin: 10,
@@ -107,11 +107,11 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.fitness_center_outlined,
+                        Icon(Icons.stacked_bar_chart,
                             color: _currentTab == 0
                                 ? Color(0xFFC72C41)
                                 : Color(0xFF2D142C)),
-                        Text("Exercicio",
+                        Text("Dashboard",
                             style: TextStyle(
                                 color: _currentTab == 0
                                     ? Color(0xFFC72C41)
@@ -131,12 +131,12 @@ class _HomeScreenState extends State<HomeScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.stacked_bar_chart,
+                          Icons.filter_list,
                           color: _currentTab == 1
                               ? Color(0xFFC72C41)
                               : Color(0xFF2D142C),
                         ),
-                        Text("Dashboard",
+                        Text("Historico",
                             style: TextStyle(
                                 color: _currentTab == 1
                                     ? Color(0xFFC72C41)
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.person,
+                          Icons.add,
                           color: _currentTab == 2
                               ? Color(0xFFC72C41)
                               : Color(0xFF2D142C),
@@ -276,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.settings,
+                          Icons.bluetooth,
                           color: _currentTab == 3
                               ? Color(0xFFC72C41)
                               : Color(0xFF2D142C),

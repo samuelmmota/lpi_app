@@ -14,7 +14,10 @@ import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
 
+//List<double> _bpmList = convertoList();
+
 class LineChartBPM extends StatefulWidget {
+  // static final _bpmList = convertoList();
   @override
   _LineChartBPMState createState() => _LineChartBPMState();
 }
@@ -28,9 +31,11 @@ class _LineChartBPMState extends State<LineChartBPM>
 
   bool showAvg = false;
   bool get wantKeepAlive => true;
+
   @override
   static List<double> _bpmList = [];
   Widget build(BuildContext context) {
+    // _bpmList = convertoList();
     return Stack(
       children: <Widget>[
         AspectRatio(
@@ -222,22 +227,20 @@ class _LineChartBPMState extends State<LineChartBPM>
   LineChartBarData lineChartBarData() {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-//var d = DateTime.now();
-    //  var firstDayOfMonth = DateTime(1,d.month,d.year);
+    var d = DateTime.now();
+    var thisDay = DateTime(d.year, d.month, d.day);
+    Timestamp timestamp = Timestamp.fromDate(thisDay); //To TimeStamp
 
-    Query bpm_uid = FirebaseFirestore.instance
+    Query bpm_time = FirebaseFirestore.instance
         .collection('BatimentosCardiacos')
-        .where('uid', isEqualTo: auth.currentUser.uid);
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .where("time", isGreaterThan: timestamp);
 
-    /* Query bpm_time = FirebaseFirestore.instance
-        .collection('weight')
-        .where("time", isGreaterThanOrEqualTo: timestamp);*/
-
-    Future<Null> bpm = bpm_uid.orderBy('time').get().then((querySnapshot) {
+    Future<Null> bpm = bpm_time.get().then((querySnapshot) {
       //clear list
       _bpmList.clear();
       querySnapshot.docs.forEach((result) {
-        // print(result.data());
+        //  print(result.data());
 
         int aux = result.data().values.skip(1).first;
         print(aux);
@@ -270,3 +273,34 @@ class _LineChartBPMState extends State<LineChartBPM>
     );
   }
 }
+/*
+List<double> convertoList() {
+  List<double> _bpmList = [];
+  var d = DateTime.now();
+  var thisDay = DateTime(d.year, d.month, d.day);
+  Timestamp timestamp = Timestamp.fromDate(thisDay); //To TimeStamp
+
+  Query bpm_time = FirebaseFirestore.instance
+      .collection('BatimentosCardiacos')
+      .where('uid', isEqualTo: auth.currentUser.uid)
+      .where("time", isGreaterThan: timestamp);
+
+  Future<Null> bpm = bpm_time.get().then((querySnapshot) {
+    //clear list
+    _bpmList.clear();
+    print("#####: uma iteração feita (BPM-LINE Chart");
+    querySnapshot.docs.forEach((result) {
+      //  print(result.data());
+
+      int aux = result.data().values.skip(1).first;
+      //print(aux);
+
+      if (aux >= 20) _bpmList.add(aux.toDouble());
+      //print("LIST:");
+      //print(_bpmList);
+    });
+  });
+
+  return _bpmList;
+}
+*/

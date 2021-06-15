@@ -132,7 +132,7 @@ class BarChartWeightState extends State<BarChartWeight>
     int x,
     double y, {
     bool isTouched = false,
-    Color barColor = Colors.red,
+    Color barColor = Colors.green,
     double width = 22,
     List<int> showTooltips = const [],
   }) {
@@ -186,6 +186,7 @@ class BarChartWeightState extends State<BarChartWeight>
           sex.clear();
           sab.clear();
           dom.clear();
+          print("#####: uma iteração feita (WEIGHT-BAR Chart");
           querySnapshot.docs.forEach((result) {
             // print(result.data());
 
@@ -203,9 +204,9 @@ class BarChartWeightState extends State<BarChartWeight>
             //if(timestamp.toDate().day==)
 
             /***Debug***/
-            print(aux);
-            print(timestamp.toDate().day);
-            print(timestamp.toDate().weekday);
+            // print(aux);
+            //print(timestamp.toDate().day);
+            //print(timestamp.toDate().weekday);
 
             //  if (aux >= 20) _bpmList.add(aux.toDouble());
             //   print("LIST POR DIA DA SEMANA:");

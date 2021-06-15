@@ -229,24 +229,23 @@ class _LineChartWeightState extends State<LineChartWeight>
     Timestamp timestamp = Timestamp.fromDate(firstDayOfMonth); //To TimeStamp
 
     Query bpm_uid = FirebaseFirestore.instance
-        .collection('wight')
-        .where('uid', isEqualTo: auth.currentUser.uid);
+        .collection('weight')
+        .where('uid', isEqualTo: auth.currentUser.uid)
+        .where("time", isGreaterThanOrEqualTo: timestamp);
 
-    Query bpm_time = bpm_uid.where("time", isGreaterThanOrEqualTo: timestamp);
-
-    Future<Null> _monthWeight =
-        bpm_time.orderBy('time', descending: true).get().then((querySnapshot) {
+    Future<Null> _monthWeight = bpm_uid.get().then((querySnapshot) {
       //clear list
       _weightList.clear();
+      print("#####: uma iteração feita (WEIGHT-LINE Chart");
       querySnapshot.docs.forEach((result) {
         // print(result.data());
 
         int aux = result.data().values.skip(1).first;
-        print(aux);
+        //  print(aux);
 
         if (aux >= 20) _weightList.add(aux.toDouble());
-        print("LIST:");
-        print(_weightList);
+        // print("LIST:");
+        // print(_weightList);
       });
     });
 

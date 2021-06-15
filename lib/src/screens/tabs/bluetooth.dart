@@ -8,6 +8,13 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:math';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+final auth = FirebaseAuth.instance;
 
 class Bluetooth extends StatefulWidget {
   @override
@@ -646,11 +653,17 @@ class DeviceScreen extends StatelessWidget {
               String text;
               switch (snapshot.data) {
                 case BluetoothDeviceState.connected:
-                  onPressed = () => device.disconnect();
+                  onPressed = () => {
+                        device.disconnect(),
+                        print("CHEGUEI AQUI"),
+                        randomDataBPM(),
+                      };
                   text = 'DISCONNECT';
                   break;
                 case BluetoothDeviceState.disconnected:
-                  onPressed = () => device.connect();
+                  onPressed = () => {
+                        device.connect(),
+                      };
                   text = 'CONNECT';
                   break;
                 default:
@@ -1025,4 +1038,50 @@ class AdapterStateTile extends StatelessWidget {
       ),
     );
   }
+}
+
+void randomDataBPM() {
+  FlutterLocalNotificationsPlugin localNotification;
+  var androidInitialize =
+      new AndroidInitializationSettings('@mipmap/ic_launcher');
+  var initializationSettings =
+      InitializationSettings(android: androidInitialize);
+  localNotification = new FlutterLocalNotificationsPlugin();
+  localNotification.initialize(initializationSettings);
+  Future _showNotification() async {
+    var androidDetails = new AndroidNotificationDetails("channelId",
+        "Local Notification", "Descrição da notificação: IMC notification",
+        importance: Importance.high);
+
+    var genralNotificationDetails =
+        new NotificationDetails(android: androidDetails);
+
+    await localNotification.show(
+        0,
+        "⚠ Cuidado: Cuidado: Valor de Bpm acelerado! ⚠",
+        "Os teus batimentos cardíacos atingiram um valor superior ao recomendado, certifica-te que não foi um erro e fica atento!",
+        genralNotificationDetails);
+  }
+
+  Random random = new Random();
+//int randomNumber = random.nextInt(220); // from 0 upto 99 included
+
+//int randomNumber = random.nextInt(170) + 50; // from 10 upto 99 included
+
+  CollectionReference imcs =
+      FirebaseFirestore.instance.collection('BatimentosCardiacos');
+
+  for (int i = 0; i < 7; i++) {
+    int randomNumber = random.nextInt(170) + 50;
+    if (randomNumber > 180) _showNotification();
+    imcs.add({
+      'uid': auth.currentUser.uid,
+      'valor': randomNumber,
+      "time": Timestamp.now(),
+      // "time": FieldValue.serverTimestamp(),
+      // "time": firebase.firestore.FieldValue.serverTimestamp(),,
+    });
+  }
+
+  print("ADICONAOS 7 NUMEROS POR BLUETOOTH TO BPM DATA");
 }

@@ -109,8 +109,8 @@ class _ExerciceState extends State<Exercice>
           children: <Widget>[
             _bpmTAB(),
             _imcTAB(),
-            Icon(Icons.directions_car, size: 350),
-            Icon(Icons.directions_bike, size: 350),
+            _weightTAB(),
+            _tensaoTAB(),
           ],
         ),
       ),
@@ -124,8 +124,11 @@ Widget _bpmTAB() {
       child: Column(
     children: <Widget>[
       Text(
-        "BPM grafico de valores diarios",
-        textAlign: TextAlign.right,
+        'Graficos Estatisticos - Batimentos Cardiacos',
+        style: TextStyle(
+            color: const Color(0xFFC72C41),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
       ),
       LineChartBPM(),
       BarChartBPM(),
@@ -139,8 +142,11 @@ Widget _imcTAB() {
       child: Column(
     children: <Widget>[
       Text(
-        "IMC grafico de valores diarios",
-        textAlign: TextAlign.right,
+        'Graficos Estatisticos -Indice Massa Corpural',
+        style: TextStyle(
+            color: const Color(0xFFC72C41),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
       ),
       LineChartIMC(),
       BarChartIMC(),
@@ -148,6 +154,43 @@ Widget _imcTAB() {
     ],
   ));
 }
+
+Widget _weightTAB() {
+  return SingleChildScrollView(
+      child: Column(
+    children: <Widget>[
+      Text(
+        'Graficos Estatisticos - Peso',
+        style: TextStyle(
+            color: const Color(0xFFC72C41),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+      ),
+      LineChartWeight(),
+      BarChartWeight(),
+      Container(),
+    ],
+  ));
+}
+
+Widget _tensaoTAB() {
+  return SingleChildScrollView(
+      child: Column(
+    children: <Widget>[
+      Text(
+        'Graficos Estatisticos - Tensão Arterial',
+        style: TextStyle(
+            color: const Color(0xFFC72C41),
+            fontSize: 18,
+            fontWeight: FontWeight.bold),
+      ),
+      LineChartTensao(),
+      BarChartTensao(),
+      Container(),
+    ],
+  ));
+}
+
 /*
 class LineChartSample2 extends StatefulWidget {
   @override

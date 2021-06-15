@@ -13,6 +13,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 final auth = FirebaseAuth.instance;
+//final _imcList = convertoList();
 
 class LineChartIMC extends StatefulWidget {
   @override
@@ -223,11 +224,16 @@ class _LineChartIMCState extends State<LineChartIMC>
   LineChartBarData lineChartBarData() {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    Future<Null> bpm = FirebaseFirestore.instance
+    var d = DateTime.now();
+    var thisDay = DateTime(d.year, d.month, d.day);
+    Timestamp timestamp = Timestamp.fromDate(thisDay); //To TimeStamp
+
+    Query imc_time = FirebaseFirestore.instance
         .collection('IMC')
         .where('uid', isEqualTo: auth.currentUser.uid)
-        .get()
-        .then((querySnapshot) {
+        .where("time", isGreaterThan: timestamp);
+
+    Future<Null> imc = imc_time.get().then((querySnapshot) {
       //clear list
       _imcList.clear();
       querySnapshot.docs.forEach((result) {
@@ -264,3 +270,34 @@ class _LineChartIMCState extends State<LineChartIMC>
     );
   }
 }
+/*
+List<double> convertoList() {
+  List<double> _imcList = [];
+  var d = DateTime.now();
+  var thisDay = DateTime(d.year, d.month, d.day);
+  Timestamp timestamp = Timestamp.fromDate(thisDay); //To TimeStamp
+
+  Query imc_time = FirebaseFirestore.instance
+      .collection('IMC')
+      .where('uid', isEqualTo: auth.currentUser.uid)
+      .where("time", isGreaterThan: timestamp);
+
+  Future<Null> imc = imc_time.get().then((querySnapshot) {
+    //clear list
+    _imcList.clear();
+    print("#####: uma iteração feita (IMC-LINE Chart");
+    querySnapshot.docs.forEach((result) {
+      // print(result.data());
+
+      int aux = result.data().values.skip(1).first;
+      // print(aux);
+
+      if (aux >= 20) _imcList.add(aux.toDouble());
+      // print("LIST:");
+      //print(_imcList);
+    });
+  });
+
+  return _imcList;
+}
+*/

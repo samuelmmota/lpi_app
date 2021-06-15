@@ -186,6 +186,7 @@ class BarChartIMCState extends State<BarChartIMC>
           sex.clear();
           sab.clear();
           dom.clear();
+          print("#####: uma iteração feita (IMC-BAR Chart");
           querySnapshot.docs.forEach((result) {
             // print(result.data());
 
@@ -203,9 +204,9 @@ class BarChartIMCState extends State<BarChartIMC>
             //if(timestamp.toDate().day==)
 
             /***Debug***/
-            print(aux);
-            print(timestamp.toDate().day);
-            print(timestamp.toDate().weekday);
+            // print(aux);
+            // print(timestamp.toDate().day);
+            //print(timestamp.toDate().weekday);
 
             //  if (aux >= 20) _bpmList.add(aux.toDouble());
             //   print("LIST POR DIA DA SEMANA:");
